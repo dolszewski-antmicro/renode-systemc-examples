@@ -159,8 +159,8 @@ jobs:
       - name: Download and build Renode
         uses: antmicro/renode-test-action@v5.0.0
         with:
-          renode-repository: ${{ inputs.renode_gitrepo || 'https://github.com/renode/renode' }}
-          renode-revision: ${{ inputs.renode_gitrev || 'master' }}
+          renode-repository: ${{ inputs.renode_gitrepo || 'https://github.com/dolszewski-antmicro/renode' }}
+          renode-revision: ${{ inputs.renode_gitrev || '93517-export_symbols' }}
 
       - name: Set CMake generator
         if: runner.os == 'Windows'
@@ -266,8 +266,8 @@ jobs:
       - name: Download and build Renode
         uses: antmicro/renode-test-action@v5.0.0
         with:
-          renode-repository: ${{ inputs.renode_gitrepo || 'https://github.com/renode/renode' }}
-          renode-revision: ${{ inputs.renode_gitrev || 'master' }}
+          renode-repository: ${{ inputs.renode_gitrepo || 'https://github.com/dolszewski-antmicro/renode' }}
+          renode-revision: ${{ inputs.renode_gitrev || '93517-export_symbols' }}
 
       - name: Prepare Artifacts Renode Logs
         shell: bash
