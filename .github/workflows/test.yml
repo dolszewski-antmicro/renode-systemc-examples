@@ -268,6 +268,14 @@ jobs:
           renode-repository: ${{ inputs.renode_gitrepo || 'https://github.com/renode/renode' }}
           renode-revision: ${{ inputs.renode_gitrev || 'master' }}
 
+      - name: Prepare Artifacts Renode Logs
+        shell: bash
+        if: always()
+        run: |
+          mkdir -p artifacts/renode_logs/examples-native
+          mkdir -p artifacts/renode_logs/examples
+          mkdir -p artifacts/renode_logs/tests
+
       - name: Run tests (native)
         if: runner.os == 'Linux'
         shell: bash
@@ -303,9 +311,16 @@ jobs:
           done
 
           pushd examples
-            renode-test -t all_examples.yaml
+            renode-test -t all_examples.yaml -r $(realpath ../artifacts/renode_logs/examples)
           popd
 
           pushd tests
-            renode-test -t all_tests.yaml
+            renode-test -t all_tests.yaml -r $(realpath ../artifacts/renode_logs/tests)
           popd
+
+      - name: Upload Renode Logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renode_logs-${{ runner.os }}-${{ github.run_id }}
+          path: artifacts/renode_logs
